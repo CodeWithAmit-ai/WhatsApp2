@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WhatsApp Sender</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+    body{
+        margin:0;
+        height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background:#0f2027;
+        font-family:Arial, sans-serif;
+    }
+
+    .box{
+        background:white;
+        padding:20px;
+        width:300px;
+        border-radius:12px;
+        box-shadow:0 10px 25px rgba(0,0,0,0.4);
+        display:flex;
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .phone-box{
+        display:flex;
+        gap:5px;
+    }
+
+    select, input, textarea, button{
+        padding:10px;
+        font-size:14px;
+        border-radius:6px;
+        border:1px solid #ccc;
+        outline:none;
+    }
+
+    select{
+        width:90px;
+    }
+
+    input{
+        flex:1;
+    }
+
+    textarea{
+        resize:none;
+        height:80px;
+    }
+
+    button{
+        background:#25D366;
+        color:white;
+        border:none;
+        cursor:pointer;
+        font-weight:bold;
+        transition:0.3s;
+    }
+
+    button:hover{
+        background:#1ebe5b;
+    }
+    #phone{
+      width: 150px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h3 style="text-align:center;margin:0;">WhatsApp Message</h3>
+
+    <div class="phone-box">
+        <select id="countryCode">
+            <option value="91">🇮🇳 +91</option>
+            <option value="1">🇺🇸 +1</option>
+            <option value="44">🇬🇧 +44</option>
+            <option value="971">🇦🇪 +971</option>
+            <option value="880">🇧🇩 +880</option>
+        </select>
+
+        <input type="text" id="phone" placeholder="Phone number">
+    </div>
+
+    <textarea id="message" placeholder="Type your message"></textarea>
+
+    <button onclick="sendWhatsApp()">Send</button>
+</div>
+
+<script>
+function sendWhatsApp(){
+    let code = document.getElementById("countryCode").value;
+    let phone = document.getElementById("phone").value.replace(/\D/g,'');
+    let message = document.getElementById("message").value.trim();
+
+    if(phone === "" || message === ""){
+        alert("Please enter phone number and message");
+        return;
+    }
+
+    let fullNumber = code + phone;
+    let encodedMsg = encodeURIComponent(message);
+
+    let url = `https://wa.me/${fullNumber}?text=${encodedMsg}`;
+    window.location.href = url;
+}
+</script>
+
+</body>
+</html>
